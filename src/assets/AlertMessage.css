@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600&display=swap');
+
+.alert-container {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border-left: 4px solid transparent;
+}
+
+/* Animation States */
+.alert-container.show {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.alert-container.hide {
+  transform: translateX(120%);
+  opacity: 0;
+}
+
+/* Content Layout */
+.alert-content {
+  display: flex;
+  align-items: flex-start;
+  padding: 16px;
+  gap: 12px;
+}
+
+.alert-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.alert-message {
+  flex: 1;
+}
+
+.alert-message p {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: #1e293b;
+  margin: 0;
+}
+
+.alert-close {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 4px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.alert-close:hover {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+/* Progress Bar */
+.alert-progress {
+  height: 3px;
+  background: currentColor; /* Takes color from the specific type */
+  opacity: 0.3;
+  transition: width 0.05s linear;
+}
+
+/* --- Types & Colors --- */
+
+/* Success */
+.alert-success {
+  border-left-color: #10b981;
+}
+.alert-success .alert-icon { color: #10b981; background: #ecfdf5; padding: 6px; border-radius: 50%; }
+.alert-success .alert-progress { background: #10b981; }
+
+/* Error */
+.alert-error {
+  border-left-color: #ef4444;
+}
+.alert-error .alert-icon { color: #ef4444; background: #fef2f2; padding: 6px; border-radius: 50%; }
+.alert-error .alert-progress { background: #ef4444; }
+
+/* Warning */
+.alert-warning {
+  border-left-color: #f59e0b;
+}
+.alert-warning .alert-icon { color: #f59e0b; background: #fffbeb; padding: 6px; border-radius: 50%; }
+.alert-warning .alert-progress { background: #f59e0b; }
+
+/* Info */
+.alert-info {
+  border-left-color: #3b82f6;
+}
+.alert-info .alert-icon { color: #3b82f6; background: #eff6ff; padding: 6px; border-radius: 50%; }
+.alert-info .alert-progress { background: #3b82f6; }
+
+/* --- Responsive Mobile --- */
+@media (max-width: 480px) {
+  .alert-container {
+    max-width: 90%;
+  }
+}

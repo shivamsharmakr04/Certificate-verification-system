@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600&display=swap');
+
+/* --- Wrapper Modes --- */
+.spinner-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000; /* High z-index */
+}
+
+/* Fullscreen Mode: Covers screen with blur */
+.spinner-wrapper.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Inline Mode: Just centers in its parent */
+.spinner-wrapper.inline {
+  width: 100%;
+  min-height: 200px; /* Ensure height for inline usage */
+}
+
+/* --- Main Content Box --- */
+.spinner-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+/* --- The Spinner Mechanism --- */
+.spinner-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* The Outer Ring */
+.spinner-ring {
+  position: absolute;
+  border: 3px solid rgba(37, 99, 235, 0.1); /* Light Blue Border */
+  border-top-color: #2563EB; /* Solid Blue Top */
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  box-shadow: 0 0 15px rgba(37, 99, 235, 0.2);
+}
+
+/* The Inner Icon Background */
+.spinner-icon-bg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  border-radius: 50%;
+  color: #2563EB;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* --- Sizes --- */
+.size-small .spinner-ring { width: 30px; height: 30px; border-width: 2px; }
+.size-small .spinner-icon-bg { width: 18px; height: 18px; }
+
+.size-medium .spinner-ring { width: 60px; height: 60px; border-width: 3px; }
+.size-medium .spinner-icon-bg { width: 36px; height: 36px; }
+
+.size-large .spinner-ring { width: 100px; height: 100px; border-width: 4px; }
+.size-large .spinner-icon-bg { width: 60px; height: 60px; }
+
+/* --- Text & Dots Animation --- */
+.spinner-text {
+  text-align: center;
+}
+
+.spinner-text p {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dots {
+  display: flex;
+  gap: 3px;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  background-color: #2563EB;
+  border-radius: 50%;
+  animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.dot:nth-child(1) { animation-delay: -0.32s; }
+.dot:nth-child(2) { animation-delay: -0.16s; }
+
+/* --- Keyframes --- */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(0.9); opacity: 0.8; }
+}
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+
+/* --- Responsiveness --- */
+@media (max-width: 600px) {
+  .spinner-text p { font-size: 1rem; }
+  /* Adjust large spinner to medium on mobile */
+  .size-large .spinner-ring { width: 70px; height: 70px; }
+  .size-large .spinner-icon-bg { width: 40px; height: 40px; }
+}
