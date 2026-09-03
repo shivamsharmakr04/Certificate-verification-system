@@ -6,6 +6,7 @@ const fs = require("fs");
 const pdfParse = require("pdf-parse");
 const Certificate = require("../models/Certificate");
 const Admin = require("../models/Admin");
+const User = require("../models/User");
 const VerificationLog = require("../models/VerificationLog");
 const auth = require("../middleware/authMiddleware");
 const readExcel = require("../utils/excelUpload");
@@ -46,7 +47,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Admin Login
+// Unified Login Endpoint (Admin & Student)
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -54,22 +55,57 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ msg: "Please enter email and password" });
     }
 
-    const admin = await Admin.findOne({ email });
-    if (!admin) return res.status(400).json({ msg: "Invalid email or password" });
+    const cleanEmail = email.trim().toLowerCase();
 
-    const match = await bcrypt.compare(password, admin.password);
-    if (!match) return res.status(400).json({ msg: "Invalid email or password" });
+    // 1. Check in Admin Collection
+    let admin = await Admin.findOne({ email: cleanEmail });
 
-    const token = jwt.sign(
-      { id: admin._id, email: admin.email, role: "admin" },
-      process.env.JWT_SECRET || "supersecretkey",
-      { expiresIn: "7d" }
-    );
+    // Auto-seed default admin if logging in with default credentials and not yet created
+    if (!admin && cleanEmail === "admin@certiverify.com" && password === "admin123") {
+      const hashed = await bcrypt.hash("admin123", 10);
+      admin = new Admin({ email: "admin@certiverify.com", password: hashed, name: "System Administrator" });
+      await admin.save();
+    }
 
-    res.json({
-      token,
-      user: { name: admin.name || "Admin User", email: admin.email, role: "admin" }
-    });
+    if (admin) {
+      const match = await bcrypt.compare(password, admin.password);
+      if (match) {
+        const token = jwt.sign(
+          { id: admin._id, email: admin.email, role: "admin" },
+          process.env.JWT_SECRET || "supersecretkey",
+          { expiresIn: "7d" }
+        );
+        return res.json({
+          token,
+          user: { name: admin.name || "Admin User", email: admin.email, role: "admin" }
+        });
+      }
+    }
+
+    // 2. Check in User Collection (Student / User Accounts)
+    const userAccount = await User.findOne({ email: cleanEmail });
+    if (userAccount) {
+      const match = await bcrypt.compare(password, userAccount.password);
+      if (match) {
+        const role = userAccount.role || "student";
+        const token = jwt.sign(
+          { id: userAccount._id, email: userAccount.email, role, certificateId: userAccount.certificateId },
+          process.env.JWT_SECRET || "supersecretkey",
+          { expiresIn: "7d" }
+        );
+        return res.json({
+          token,
+          user: {
+            name: userAccount.name,
+            email: userAccount.email,
+            role,
+            certificateId: userAccount.certificateId
+          }
+        });
+      }
+    }
+
+    return res.status(400).json({ msg: "Invalid email or password" });
   } catch (err) {
     res.status(500).json({ msg: "Server error during login", error: err.message });
   }
