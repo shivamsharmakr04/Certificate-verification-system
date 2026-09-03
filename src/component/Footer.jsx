@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { 
   ShieldCheck, 
   ArrowUp, 
@@ -7,24 +9,30 @@ import {
   Github, 
   Mail,
   MapPin,
-  Phone,
-  Send
+  Send,
+  Sparkles,
+  Lock,
+  CheckCircle2
 } from "lucide-react";
 import "../assets/Footer.css";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [showTopBtn, setShowTopBtn] = useState(false);
+  const [subscribed, setSubscribed] = useState(false);
+  const navigate = useNavigate();
 
   // Handle Back to Top visibility
   useEffect(() => {
-    window.addEventListener("scroll", () => {
+    const handleScroll = () => {
       if (window.scrollY > 300) {
         setShowTopBtn(true);
       } else {
         setShowTopBtn(false);
       }
-    });
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const goToTop = () => {
@@ -36,9 +44,10 @@ export default function Footer() {
 
   const handleSubscribe = (e) => {
     e.preventDefault();
-    if(email) {
-      alert(`Subscribed with: ${email}`);
+    if (email) {
+      setSubscribed(true);
       setEmail("");
+      setTimeout(() => setSubscribed(false), 4000);
     }
   };
 
@@ -50,76 +59,93 @@ export default function Footer() {
             
             {/* Column 1: Brand & About */}
             <div className="footer-col brand-col">
-              <div className="footer-logo">
+              <div className="footer-logo" onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
                 <ShieldCheck size={32} className="logo-icon" />
                 <h2>CertiVerify</h2>
               </div>
               <p>
-                A secure and reliable platform for issuing and verifying internship certificates. 
-                Bridging the gap between education and industry recognition.
+                An AI-powered, tamper-proof platform for issuing and verifying internship credentials with instant PDF generation and fraud detection.
               </p>
               <div className="social-links">
                 <a href="#" className="social-btn" aria-label="Twitter">
-                  <Twitter size={20} />
+                  <Twitter size={18} />
                 </a>
                 <a href="#" className="social-btn" aria-label="Github">
-                  <Github size={20} />
+                  <Github size={18} />
                 </a>
                 <a href="#" className="social-btn" aria-label="Linkedin">
-                  <Linkedin size={20} />
+                  <Linkedin size={18} />
                 </a>
               </div>
             </div>
 
             {/* Column 2: Quick Links */}
             <div className="footer-col">
-              <h3>Quick Links</h3>
+              <h3>Quick Navigation</h3>
               <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About Us</a></li>
-                <li><a href="/verify">Verify Certificate</a></li>
-                <li><a href="/contact">Contact Support</a></li>
+                <li><span onClick={() => navigate("/")} className="footer-link">Home</span></li>
+                <li><span onClick={() => navigate("/about")} className="footer-link">About Us</span></li>
+                <li><span onClick={() => navigate("/verify")} className="footer-link">Verify Certificate</span></li>
+                <li><span onClick={() => navigate("/contact")} className="footer-link">Contact Support</span></li>
               </ul>
             </div>
 
-            {/* Column 3: Legal & Support */}
+            {/* Column 3: Platform Features */}
             <div className="footer-col">
-              <h3>Legal & Support</h3>
+              <h3>Core Platform</h3>
               <ul>
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Terms of Service</a></li>
-                <li><a href="#">Cookie Policy</a></li>
-                <li><a href="#">FAQ</a></li>
+                <li><span onClick={() => navigate("/verify")} className="footer-link">AI OCR Image Scanner</span></li>
+                <li><span onClick={() => navigate("/register")} className="footer-link">Student Auto Certificate</span></li>
+                <li><span onClick={() => navigate("/login")} className="footer-link">Admin Multi-Upload</span></li>
+                <li><span onClick={() => navigate("/admin/dashboard")} className="footer-link">Telemetry Analytics</span></li>
               </ul>
             </div>
 
             {/* Column 4: Newsletter & Contact */}
             <div className="footer-col newsletter-col">
-              <h3>Stay Updated</h3>
-              <p>Subscribe to get the latest updates and features.</p>
-              <form className="newsletter-form" onSubmit={handleSubscribe}>
-                <div className="input-group">
-                  <Mail size={18} className="input-icon" />
-                  <input 
-                    type="email" 
-                    placeholder="Your email address" 
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                  <button type="submit" className="send-btn">
-                    <Send size={18} />
-                  </button>
-                </div>
-              </form>
+              <h3>Stay Informed</h3>
+              <p>Subscribe for updates on credential security and features.</p>
               
-              <div className="contact-info">
+              {subscribed ? (
+                <div style={{
+                  padding: "10px 14px",
+                  borderRadius: "8px",
+                  background: "rgba(16, 185, 129, 0.2)",
+                  color: "#34d399",
+                  border: "1px solid rgba(16, 185, 129, 0.4)",
+                  fontSize: "0.85rem",
+                  fontWeight: "600",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "6px"
+                }}>
+                  <CheckCircle2 size={16} /> Subscribed successfully!
+                </div>
+              ) : (
+                <form className="newsletter-form" onSubmit={handleSubscribe}>
+                  <div className="input-group">
+                    <Mail size={18} className="input-icon" />
+                    <input 
+                      type="email" 
+                      placeholder="Enter your email address" 
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                    <button type="submit" className="send-btn">
+                      <Send size={16} />
+                    </button>
+                  </div>
+                </form>
+              )}
+              
+              <div className="contact-info" style={{ marginTop: "16px" }}>
                 <div className="contact-item">
-                  <Mail size={16} />
+                  <Mail size={15} />
                   <span>support@certiverify.com</span>
                 </div>
                 <div className="contact-item">
-                  <MapPin size={16} />
+                  <MapPin size={15} />
                   <span>Silicon Valley, CA</span>
                 </div>
               </div>
@@ -129,9 +155,9 @@ export default function Footer() {
 
           {/* Bottom Bar */}
           <div className="footer-bottom">
-            <p>&copy; {new Date().getFullYear()} CertiVerify. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} CertiVerify Inc. All rights reserved.</p>
             <div className="made-by">
-              Built by Shivam
+              Built with React, Node.js & MongoDB
             </div>
           </div>
         </div>
@@ -139,9 +165,15 @@ export default function Footer() {
 
       {/* Back to Top Button */}
       {showTopBtn && (
-        <button className="back-to-top" onClick={goToTop}>
+        <motion.button 
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="back-to-top" 
+          onClick={goToTop}
+          aria-label="Back to Top"
+        >
           <ArrowUp size={20} />
-        </button>
+        </motion.button>
       )}
     </>
   );
