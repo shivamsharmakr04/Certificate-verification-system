@@ -26,7 +26,7 @@ export default function Login() {
         if (result.role === 'admin') {
           navigate("/admin/dashboard");
         } else {
-          navigate("/");
+          navigate("/student/dashboard");
         }
       } else {
         setError(result.msg || "Invalid email or password");
