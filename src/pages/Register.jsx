@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { User, Mail, Lock, Eye, EyeOff, UserPlus } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/Authcontext";
 import "../assets/Auth.css";
 
 export default function Register() {
@@ -12,27 +13,38 @@ export default function Register() {
     confirmPassword: ""
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { register } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
+    setError("");
+
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+      setError("Passwords do not match!");
       return;
     }
     
     setIsLoading(true);
 
-    // Simulate API Call
-    setTimeout(() => {
+    try {
+      const res = await register(formData.name, formData.email, formData.password);
+      if (res.success) {
+        navigate("/admin/dashboard");
+      } else {
+        setError(res.msg || "Registration failed");
+      }
+    } catch (err) {
+      setError("Registration error. Please try again.");
+    } finally {
       setIsLoading(false);
-      navigate("/login"); // Redirect to login after register
-    }, 1500);
+    }
   };
 
   return (
@@ -70,6 +82,20 @@ export default function Register() {
           </div>
 
           <form onSubmit={handleRegister}>
+            {error && (
+              <div style={{
+                color: '#ef4444',
+                backgroundColor: '#fef2f2',
+                padding: '12px',
+                borderRadius: '8px',
+                marginBottom: '20px',
+                fontSize: '0.9rem',
+                textAlign: 'center',
+                border: '1px solid #fee2e2'
+              }}>
+                {error}
+              </div>
+            )}
             <div className="form-group">
               <label>Full Name</label>
               <div className="input-wrapper">

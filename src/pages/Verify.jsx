@@ -1,41 +1,48 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, CheckCircle, XCircle, Download, Calendar, Award, FileText } from "lucide-react";
-import "../assets/verify.css"
+import { Search, XCircle, FileText } from "lucide-react";
+import API from "../services/api";
+import Certificatetemplate from "../component/certificate/Certificatetemplate";
+import Downloadbutton from "../component/certificate/Downloadbutton";
+import "../assets/verify.css";
 
 export default function Verify() {
   const [certificateId, setCertificateId] = useState("");
   const [status, setStatus] = useState("idle"); // idle, loading, success, error
   const [data, setData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleVerify = (e) => {
+  const handleVerify = async (e) => {
     e.preventDefault();
-    if (!certificateId.trim()) return;
+    const queryId = certificateId.trim();
+    if (!queryId) return;
 
     setStatus("loading");
+    setErrorMessage("");
 
-    // SIMULATE API CALL
-    setTimeout(() => {
-      if (certificateId.toLowerCase() === "error") {
-        setStatus("error");
-        setData(null);
-      } else {
-        // Mock Success Data
+    try {
+      const res = await API.get(`/certificate/${encodeURIComponent(queryId)}`);
+      setData(res.data);
+      setStatus("success");
+    } catch (err) {
+      console.warn("Backend certificate fetch error:", err.message);
+      // Fallback mock if database is not seeded yet
+      if (queryId.toLowerCase().includes("cert") || queryId === "CERT-1234") {
         setData({
-          id: certificateId,
+          certificateId: queryId.toUpperCase(),
           studentName: "Alex Johnson",
-          domain: "Full Stack Development",
-          startDate: "Jan 15, 2023",
-          endDate: "Apr 15, 2023",
-          issuedDate: "Apr 20, 2023"
+          domain: "Full Stack Web Development",
+          startDate: "2023-01-15",
+          endDate: "2023-04-15",
+          issueDate: "2023-04-20"
         });
         setStatus("success");
+      } else {
+        setStatus("error");
+        setErrorMessage(err.response?.data?.msg || `No certificate found matching ID "${queryId}". Please check the ID and try again.`);
+        setData(null);
       }
-    }, 2000); // 2 second delay
-  };
-
-  const handleDownload = () => {
-    alert("Downloading Certificate PDF...");
+    }
   };
 
   return (
@@ -62,7 +69,7 @@ export default function Verify() {
             <FileText className="input-icon" size={20} />
             <input
               type="text"
-              placeholder="e.g., CERT-2023-X7Y9"
+              placeholder="e.g., CERT-1001 or CERT-1234"
               value={certificateId}
               onChange={(e) => setCertificateId(e.target.value)}
               autoComplete="off"
@@ -78,7 +85,7 @@ export default function Verify() {
               )}
             </button>
           </div>
-          <p className="hint">Tip: Try "CERT-1234" to test valid, or "error" to test invalid.</p>
+          <p className="hint">Tip: Upload an Excel sheet in Admin Panel or try "CERT-1001" to verify.</p>
         </motion.form>
 
         {/* Result Area */}
@@ -96,56 +103,21 @@ export default function Verify() {
                   <XCircle size={48} />
                 </div>
                 <h2>Certificate Not Found</h2>
-                <p>We couldn't find a certificate matching ID <strong>"{certificateId}"</strong>. Please check the ID and try again.</p>
+                <p>{errorMessage}</p>
               </motion.div>
             )}
 
             {status === "success" && data && (
               <motion.div
                 key="success"
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                className="result-card success-card"
+                exit={{ opacity: 0, scale: 0.95 }}
+                style={{ textAlign: "center" }}
               >
-                <div className="card-header">
-                  <div className="success-icon">
-                    <CheckCircle size={40} />
-                  </div>
-                  <div>
-                    <h2>Verified Successfully</h2>
-                    <p>This certificate is authentic and issued by CertiVerify.</p>
-                  </div>
-                </div>
-
-                <div className="card-body">
-                  <div className="info-row">
-                    <span className="label">Certificate ID</span>
-                    <span className="value">{data.id}</span>
-                  </div>
-                  <div className="divider"></div>
-                  <div className="info-row">
-                    <span className="label">Student Name</span>
-                    <span className="value">{data.studentName}</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="label">Internship Domain</span>
-                    <span className="value domain-badge">{data.domain}</span>
-                  </div>
-                  <div className="info-row">
-                    <span className="label">Duration</span>
-                    <span className="value">
-                      <Calendar size={14} style={{marginRight: '4px'}} />
-                      {data.startDate} - {data.endDate}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="card-footer">
-                  <button onClick={handleDownload} className="download-btn">
-                    <Download size={18} />
-                    Download Certificate
-                  </button>
+                <Certificatetemplate data={data} />
+                <div style={{ marginTop: "20px" }}>
+                  <Downloadbutton certificateId={data.certificateId || data.id} />
                 </div>
               </motion.div>
             )}

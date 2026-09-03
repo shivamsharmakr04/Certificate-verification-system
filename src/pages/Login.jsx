@@ -20,22 +20,22 @@ export default function Login() {
     setError("");
     setIsLoading(true);
 
-    // Simulate network delay
-    setTimeout(() => {
-      const result = login(email, password); // Call login from context
-
+    try {
+      const result = await login(email, password);
       if (result.success) {
-        // Redirect based on Role
         if (result.role === 'admin') {
           navigate("/admin/dashboard");
         } else {
-          navigate("/"); // Students go to Home
+          navigate("/");
         }
       } else {
-        setError("Invalid email or password");
+        setError(result.msg || "Invalid email or password");
       }
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   return (
