@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const fs = require("fs");
 const pdfParse = require("pdf-parse");
+const Tesseract = require("tesseract.js");
 const Certificate = require("../models/Certificate");
 const Admin = require("../models/Admin");
 const User = require("../models/User");
@@ -123,8 +124,24 @@ router.post("/upload", auth, upload.single("file"), async (req, res) => {
   try {
     let records = [];
 
-    // 1. PDF File Parsing
-    if (originalName.endsWith(".pdf")) {
+    // 1. Image File Parsing (OCR)
+    if (originalName.endsWith(".png") || originalName.endsWith(".jpg") || originalName.endsWith(".jpeg")) {
+      const { data: { text } } = await Tesseract.recognize(filePath, "eng");
+      const idMatch = text.match(/(CERT[-_ ]?[A-Z0-9]{3,12})/i);
+      const nameMatch = text.match(/(?:Name|Student|Issued To):\s*([A-Za-z ]+)/i);
+      const domainMatch = text.match(/(?:Domain|Field|Specialization):\s*([A-Za-z ]+)/i);
+
+      records.push({
+        certificateId: idMatch ? idMatch[1].replace(/ /g, "-").toUpperCase() : `CERT-IMG-${Math.floor(1000 + Math.random() * 9000)}`,
+        studentName: nameMatch ? nameMatch[1].trim() : "Scanned Student",
+        domain: domainMatch ? domainMatch[1].trim() : "Web Development",
+        startDate: new Date("2026-01-01"),
+        endDate: new Date("2026-04-01"),
+        issueDate: new Date()
+      });
+    }
+    // 2. PDF File Parsing
+    else if (originalName.endsWith(".pdf")) {
       const dataBuffer = fs.readFileSync(filePath);
       const parsedPdf = await pdfParse(dataBuffer);
       const text = parsedPdf.text || "";
@@ -143,7 +160,7 @@ router.post("/upload", auth, upload.single("file"), async (req, res) => {
         issueDate: new Date()
       });
     } 
-    // 2. Excel File Parsing
+    // 3. Excel & CSV File Parsing
     else {
       records = readExcel(filePath);
     }
