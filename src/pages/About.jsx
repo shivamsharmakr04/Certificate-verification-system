@@ -10,6 +10,7 @@ import {
   ArrowRight,
   CheckCircle 
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import "../assets/About.css";
 
 // Animation configuration for scroll reveal
@@ -33,6 +34,8 @@ const staggerContainer = {
 };
 
 export default function About() {
+  const navigate = useNavigate();
+
   return (
     <div className="about-page">
       {/* Hero Section */}
@@ -51,11 +54,11 @@ export default function About() {
             No more paperwork, no more delays.
           </p>
           <div className="hero-btns">
-            <button className="primary-btn" onClick={() => window.location.href='/verify'}>
+            <button className="primary-btn" onClick={() => navigate('/verify')}>
               Try Verification <ArrowRight size={18} />
             </button>
-            <button className="secondary-btn" onClick={() => window.location.href='/register'}>
-              Join as Admin
+            <button className="secondary-btn" onClick={() => navigate('/register')}>
+              Join Platform
             </button>
           </div>
         </motion.div>
@@ -217,7 +220,7 @@ export default function About() {
             <CheckCircle size={48} className="cta-icon" />
             <h2>Ready to Verify?</h2>
             <p>Join thousands of students and institutions trusting CertiVerify.</p>
-            <button className="cta-btn" onClick={() => window.location.href='/verify'}>
+            <button className="cta-btn" onClick={() => navigate('/verify')}>
               Get Started Now
             </button>
           </motion.div>
