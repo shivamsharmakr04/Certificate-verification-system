@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { User, Mail, Lock, Eye, EyeOff, UserPlus } from "lucide-react";
+import { User, Mail, Lock, Eye, EyeOff, UserPlus, Award, ShieldCheck, Sparkles } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/Authcontext";
 import "../assets/Auth.css";
 
 export default function Register() {
+  const [accountType, setAccountType] = useState("student"); // 'student' or 'admin'
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
-    confirmPassword: ""
+    confirmPassword: "",
+    domain: "Full Stack Web Development"
   });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  
   const { register } = useAuth();
   const navigate = useNavigate();
 
@@ -34,9 +37,20 @@ export default function Register() {
     setIsLoading(true);
 
     try {
-      const res = await register(formData.name, formData.email, formData.password);
+      const res = await register(
+        formData.name,
+        formData.email,
+        formData.password,
+        accountType,
+        { domain: formData.domain }
+      );
+
       if (res.success) {
-        navigate("/admin/dashboard");
+        if (res.role === "admin") {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/student/dashboard");
+        }
       } else {
         setError(res.msg || "Registration failed");
       }
@@ -53,12 +67,12 @@ export default function Register() {
       <div className="auth-left">
         <div className="auth-left-content">
           <h2>Join CertiVerify</h2>
-          <p>Create an account to start issuing or verifying internship certificates securely.</p>
+          <p>Create a Student account to automatically receive your internship certificate or an Admin account to manage verification records.</p>
           
           <div className="auth-stats">
             <div className="stat-item">
-              <h4>500+</h4>
-              <span>Institutions</span>
+              <h4>Auto</h4>
+              <span>Certificate ID</span>
             </div>
             <div className="stat-item">
               <h4>Safe</h4>
@@ -78,7 +92,60 @@ export default function Register() {
         >
           <div className="auth-header">
             <h1>Create Account</h1>
-            <p>Fill in the details to get started</p>
+            <p>Select your account role to get started</p>
+          </div>
+
+          {/* Account Role Toggle */}
+          <div style={{
+            display: "flex",
+            background: "rgba(15, 23, 42, 0.6)",
+            padding: "4px",
+            borderRadius: "10px",
+            border: "1px solid rgba(255, 255, 255, 0.1)",
+            marginBottom: "20px"
+          }}>
+            <button
+              type="button"
+              onClick={() => setAccountType("student")}
+              style={{
+                flex: 1,
+                padding: "8px 16px",
+                borderRadius: "8px",
+                border: "none",
+                background: accountType === "student" ? "linear-gradient(135deg, #10b981 0%, #059669 100%)" : "transparent",
+                color: accountType === "student" ? "#ffffff" : "#94a3b8",
+                fontWeight: "700",
+                fontSize: "0.85rem",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "6px"
+              }}
+            >
+              <User size={16} /> Student (Auto Certificate)
+            </button>
+            <button
+              type="button"
+              onClick={() => setAccountType("admin")}
+              style={{
+                flex: 1,
+                padding: "8px 16px",
+                borderRadius: "8px",
+                border: "none",
+                background: accountType === "admin" ? "linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)" : "transparent",
+                color: accountType === "admin" ? "#ffffff" : "#94a3b8",
+                fontWeight: "700",
+                fontSize: "0.85rem",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "6px"
+              }}
+            >
+              <ShieldCheck size={16} /> Admin Portal
+            </button>
           </div>
 
           <form onSubmit={handleRegister}>
@@ -96,6 +163,7 @@ export default function Register() {
                 {error}
               </div>
             )}
+
             <div className="form-group">
               <label>Full Name</label>
               <div className="input-wrapper">
@@ -127,6 +195,36 @@ export default function Register() {
                 />
               </div>
             </div>
+
+            {accountType === "student" && (
+              <div className="form-group">
+                <label>Internship Domain</label>
+                <div className="input-wrapper">
+                  <Award size={18} className="input-icon" style={{left: '16px', right: 'auto', cursor: 'default'}} />
+                  <select
+                    name="domain"
+                    value={formData.domain}
+                    onChange={handleChange}
+                    style={{
+                      width: "100%",
+                      padding: "12px 16px 12px 45px",
+                      borderRadius: "8px",
+                      border: "1px solid rgba(255, 255, 255, 0.15)",
+                      background: "rgba(15, 23, 42, 0.8)",
+                      color: "#ffffff",
+                      fontSize: "0.95rem",
+                      outline: "none"
+                    }}
+                  >
+                    <option value="Full Stack Web Development">Full Stack Web Development</option>
+                    <option value="Data Science & Analytics">Data Science & Analytics</option>
+                    <option value="Artificial Intelligence & ML">Artificial Intelligence & ML</option>
+                    <option value="Cyber Security">Cyber Security</option>
+                    <option value="Cloud Computing & DevOps">Cloud Computing & DevOps</option>
+                  </select>
+                </div>
+              </div>
+            )}
 
             <div className="form-group">
               <label>Password</label>
@@ -167,11 +265,11 @@ export default function Register() {
               {isLoading ? (
                 <>
                   <div className="spinner"></div>
-                  Creating Account...
+                  Generating Account & Certificate...
                 </>
               ) : (
                 <>
-                  Sign Up <UserPlus size={18} />
+                  {accountType === "student" ? "Register & Generate Certificate" : "Register Admin"} <UserPlus size={18} />
                 </>
               )}
             </button>

@@ -1,13 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-require("dotenv").config();
+const path = require("path");
+require("dotenv").config({ path: path.join(__dirname, ".env") });
 
 const app = express();
 
 // Middleware
 app.use(cors({
-  origin: "http://localhost:5173",  // Vite default port
+  origin: "http://localhost:5173",
   credentials: true
 }));
 app.use(express.json());
@@ -20,9 +21,10 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/certificate", certificateRoutes);
 
 // Database Connection
-mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("MongoDB Connected"))
-.catch(err => console.log(err));
+const mongoURI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/certificate_db";
+mongoose.connect(mongoURI)
+  .then(() => console.log("MongoDB Connected Successfully"))
+  .catch(err => console.error("MongoDB Connection Error:", err.message));
 
 // Server
 const PORT = process.env.PORT || 5000;

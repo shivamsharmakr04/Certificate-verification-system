@@ -8,6 +8,8 @@ import Register from "./pages/Register";
 import Contact from "./pages/Contact";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminRoute from "./component/AdminRoute";
+import StudentDashboard from "./pages/StudentDashboard";
+import StudentRoute from "./component/StudentRoute";
 import Footer from "./component/Footer";
 import { AuthProvider } from "./context/Authcontext";
 
@@ -23,9 +25,15 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/student/dashboard" element={
+          <StudentRoute>
+            <StudentDashboard />
+          </StudentRoute>
+        } />
         <Route path="/admin/dashboard" element={
           <AdminRoute>
-          <AdminDashboard /> </AdminRoute>
+            <AdminDashboard />
+          </AdminRoute>
         } />
       </Routes>
       <Footer />

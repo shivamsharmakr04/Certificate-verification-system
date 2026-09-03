@@ -51,14 +51,19 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Async Register Function
-  const register = async (name, email, password) => {
+  const register = async (name, email, password, role = "student", extraData = {}) => {
     try {
-      const res = await API.post("/admin/register", { name, email, password });
+      const endpoint = role === "admin" ? "/admin/register" : "/certificate/register-student";
+      const payload = role === "admin" 
+        ? { name, email, password }
+        : { name, email, password, ...extraData };
+
+      const res = await API.post(endpoint, payload);
       if (res.data.token && res.data.user) {
         setUser(res.data.user);
         localStorage.setItem("user", JSON.stringify(res.data.user));
         localStorage.setItem("token", res.data.token);
-        return { success: true, role: res.data.user.role || "admin" };
+        return { success: true, role: res.data.user.role || role, user: res.data.user };
       }
       return { success: true, msg: res.data.msg };
     } catch (err) {

@@ -8,18 +8,17 @@ import {
   ShieldCheck, 
   LogOut, 
   LayoutDashboard,
+  Award,
   UserCircle 
 } from "lucide-react";
+import { useAuth } from "../context/Authcontext";
 import "./Navbar.css";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   
-  // MOCK AUTHENTICATION STATE
-  // Change this to { name: 'Admin', role: 'admin' } to see the Admin Dashboard link
-  const [user, setUser] = useState(null); 
-  
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   // Handle Scroll Effect
@@ -35,7 +34,7 @@ export default function Navbar() {
   const closeMenu = () => setIsOpen(false);
 
   const handleLogout = () => {
-    setUser(null);
+    logout();
     navigate("/");
     closeMenu();
   };
@@ -80,14 +79,21 @@ export default function Navbar() {
             </Link>
           </li>
 
-          {/* Conditional Rendering based on User Role */}
+          {/* Role-Based Links */}
           {user ? (
             <>
-              {user.role === 'admin' && (
+              {user.role === 'admin' ? (
                 <li>
                   <Link to="/admin/dashboard" className="dashboard-link">
                     <LayoutDashboard size={18} />
-                    <span>Dashboard</span>
+                    <span>Admin Panel</span>
+                  </Link>
+                </li>
+              ) : (
+                <li>
+                  <Link to="/student/dashboard" className="dashboard-link" style={{ background: "rgba(16, 185, 129, 0.2)", color: "#34d399", border: "1px solid rgba(16, 185, 129, 0.4)" }}>
+                    <Award size={18} />
+                    <span>My Certificate</span>
                   </Link>
                 </li>
               )}
@@ -131,11 +137,11 @@ export default function Navbar() {
                       <UserCircle size={40} />
                       <div>
                         <h4>{user.name}</h4>
-                        <p>{user.role}</p>
+                        <p>{user.role === 'admin' ? 'System Administrator' : 'Student Account'}</p>
                       </div>
                     </>
                   ) : (
-                    <h3>Welcome Guest</h3>
+                    <h3>Welcome to CertiVerify</h3>
                   )}
                 </div>
               </div>
@@ -165,11 +171,18 @@ export default function Navbar() {
                 {/* Conditional Mobile Links */}
                 {user ? (
                   <>
-                    {user.role === 'admin' && (
+                    {user.role === 'admin' ? (
                       <motion.div variants={itemVariants} transition={{ delay: 0.3 }}>
                         <Link to="/admin/dashboard" onClick={closeMenu} className="mobile-link-item">
                           <LayoutDashboard size={20} />
                           <span>Admin Dashboard</span>
+                        </Link>
+                      </motion.div>
+                    ) : (
+                      <motion.div variants={itemVariants} transition={{ delay: 0.3 }}>
+                        <Link to="/student/dashboard" onClick={closeMenu} className="mobile-link-item">
+                          <Award size={20} />
+                          <span>My Certificate</span>
                         </Link>
                       </motion.div>
                     )}
