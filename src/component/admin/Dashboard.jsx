@@ -38,8 +38,8 @@ export default function Dashboard({ students = [] }) {
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "24px" }}>
         <div>
-          <h1 style={{ fontSize: "1.8rem", fontWeight: "800", color: "#f8fafc" }}>Real-Time System Overview</h1>
-          <p style={{ color: "#94a3b8", fontSize: "0.95rem" }}>Live metrics tracking application usage, AI image verifications, and fraud detection analytics.</p>
+          <h1 style={{ fontSize: "1.8rem", fontWeight: "800", color: "#0f172a" }}>Real-Time System Overview</h1>
+          <p style={{ color: "#475569", fontSize: "0.95rem" }}>Live metrics tracking application usage, AI image verifications, and fraud detection analytics.</p>
         </div>
 
         <button 
@@ -49,11 +49,12 @@ export default function Dashboard({ students = [] }) {
             display: "inline-flex",
             alignItems: "center",
             gap: "8px",
-            background: "rgba(255, 255, 255, 0.05)",
-            border: "1px solid rgba(255, 255, 255, 0.15)",
-            color: "#f8fafc",
+            background: "#ffffff",
+            border: "1px solid #cbd5e1",
+            color: "#0f172a",
             padding: "8px 16px",
             borderRadius: "10px",
+            fontWeight: "600",
             cursor: "pointer"
           }}
         >
@@ -66,57 +67,57 @@ export default function Dashboard({ students = [] }) {
         {/* KPI 1: Total Certificates */}
         <div className="glass-panel" style={{ padding: "20px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ fontSize: "0.85rem", color: "#94a3b8", fontWeight: "600" }}>Total Certificates</span>
-            <div style={{ background: "rgba(99, 102, 241, 0.15)", color: "#818cf8", padding: "10px", borderRadius: "12px" }}>
+            <span style={{ fontSize: "0.85rem", color: "#64748b", fontWeight: "600" }}>Total Certificates</span>
+            <div style={{ background: "#eff6ff", color: "#2563eb", padding: "10px", borderRadius: "12px" }}>
               <Users size={22} />
             </div>
           </div>
-          <h3 style={{ fontSize: "2.2rem", fontWeight: "800", color: "#f8fafc", margin: "12px 0 4px 0" }}>
+          <h3 style={{ fontSize: "2.2rem", fontWeight: "800", color: "#0f172a", margin: "12px 0 4px 0" }}>
             {totalCertificates}
           </h3>
-          <span style={{ fontSize: "0.8rem", color: "#34d399", fontWeight: "500" }}>Active Records in DB</span>
+          <span style={{ fontSize: "0.8rem", color: "#16a34a", fontWeight: "600" }}>Active Records in DB</span>
         </div>
 
         {/* KPI 2: Total Verification Attempts */}
         <div className="glass-panel" style={{ padding: "20px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ fontSize: "0.85rem", color: "#94a3b8", fontWeight: "600" }}>Total Verifications</span>
-            <div style={{ background: "rgba(6, 182, 212, 0.15)", color: "#22d3ee", padding: "10px", borderRadius: "12px" }}>
+            <span style={{ fontSize: "0.85rem", color: "#64748b", fontWeight: "600" }}>Total Verifications</span>
+            <div style={{ background: "#f0f9ff", color: "#0284c7", padding: "10px", borderRadius: "12px" }}>
               <Activity size={22} />
             </div>
           </div>
-          <h3 style={{ fontSize: "2.2rem", fontWeight: "800", color: "#f8fafc", margin: "12px 0 4px 0" }}>
+          <h3 style={{ fontSize: "2.2rem", fontWeight: "800", color: "#0f172a", margin: "12px 0 4px 0" }}>
             {totalVerifications}
           </h3>
-          <span style={{ fontSize: "0.8rem", color: "#94a3b8", fontWeight: "500" }}>Total User Searches & Scans</span>
+          <span style={{ fontSize: "0.8rem", color: "#64748b", fontWeight: "600" }}>Total User Searches & Scans</span>
         </div>
 
         {/* KPI 3: Authentic Verified */}
         <div className="glass-panel" style={{ padding: "20px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ fontSize: "0.85rem", color: "#94a3b8", fontWeight: "600" }}>Authentic Certificates</span>
-            <div style={{ background: "rgba(16, 185, 129, 0.15)", color: "#34d399", padding: "10px", borderRadius: "12px" }}>
+            <span style={{ fontSize: "0.85rem", color: "#64748b", fontWeight: "600" }}>Authentic Certificates</span>
+            <div style={{ background: "#ecfdf5", color: "#10b981", padding: "10px", borderRadius: "12px" }}>
               <CheckCircle2 size={22} />
             </div>
           </div>
-          <h3 style={{ fontSize: "2.2rem", fontWeight: "800", color: "#34d399", margin: "12px 0 4px 0" }}>
+          <h3 style={{ fontSize: "2.2rem", fontWeight: "800", color: "#10b981", margin: "12px 0 4px 0" }}>
             {authenticCount}
           </h3>
-          <span style={{ fontSize: "0.8rem", color: "#a7f3d0", fontWeight: "500" }}>Verified Real Records</span>
+          <span style={{ fontSize: "0.8rem", color: "#059669", fontWeight: "600" }}>Verified Real Records</span>
         </div>
 
         {/* KPI 4: Tampered / Fraud Alerts */}
         <div className="glass-panel" style={{ padding: "20px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span style={{ fontSize: "0.85rem", color: "#94a3b8", fontWeight: "600" }}>Tampered Alerts</span>
-            <div style={{ background: "rgba(244, 63, 94, 0.15)", color: "#fb7185", padding: "10px", borderRadius: "12px" }}>
+            <span style={{ fontSize: "0.85rem", color: "#64748b", fontWeight: "600" }}>Tampered Alerts</span>
+            <div style={{ background: "#fff1f2", color: "#f43f5e", padding: "10px", borderRadius: "12px" }}>
               <ShieldAlert size={22} />
             </div>
           </div>
-          <h3 style={{ fontSize: "2.2rem", fontWeight: "800", color: "#fb7185", margin: "12px 0 4px 0" }}>
+          <h3 style={{ fontSize: "2.2rem", fontWeight: "800", color: "#e11d48", margin: "12px 0 4px 0" }}>
             {tamperedCount}
           </h3>
-          <span style={{ fontSize: "0.8rem", color: "#fecdd3", fontWeight: "500" }}>Forged Attempts Blocked</span>
+          <span style={{ fontSize: "0.8rem", color: "#be123c", fontWeight: "600" }}>Forged Attempts Blocked</span>
         </div>
       </div>
 
@@ -124,10 +125,10 @@ export default function Dashboard({ students = [] }) {
       <div className="glass-panel" style={{ padding: "24px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
           <div>
-            <h2 style={{ fontSize: "1.2rem", fontWeight: "700", color: "#f8fafc" }}>Real-Time Verification Audit Stream</h2>
-            <p style={{ fontSize: "0.85rem", color: "#94a3b8" }}>Live feed of certificate lookups and AI OCR image verification scans.</p>
+            <h2 style={{ fontSize: "1.2rem", fontWeight: "700", color: "#0f172a" }}>Real-Time Verification Audit Stream</h2>
+            <p style={{ fontSize: "0.85rem", color: "#64748b" }}>Live feed of certificate lookups and AI OCR image verification scans.</p>
           </div>
-          <span style={{ fontSize: "0.8rem", color: "#34d399", display: "flex", alignItems: "center", gap: "6px" }}>
+          <span style={{ fontSize: "0.8rem", color: "#10b981", display: "flex", alignItems: "center", gap: "6px", fontWeight: "700" }}>
             <span className="live-dot" /> Live Telemetry
           </span>
         </div>
@@ -138,8 +139,8 @@ export default function Dashboard({ students = [] }) {
               <div 
                 key={log._id}
                 style={{
-                  background: "rgba(15, 23, 42, 0.6)",
-                  border: "1px solid rgba(255, 255, 255, 0.08)",
+                  background: "#f8fafc",
+                  border: "1px solid #e2e8f0",
                   borderRadius: "12px",
                   padding: "14px 18px",
                   display: "flex",
@@ -151,13 +152,13 @@ export default function Dashboard({ students = [] }) {
                   <div style={{
                     padding: "8px",
                     borderRadius: "10px",
-                    background: log.verificationMethod === "ocr_image" ? "rgba(6, 182, 212, 0.15)" : "rgba(99, 102, 241, 0.15)",
-                    color: log.verificationMethod === "ocr_image" ? "#22d3ee" : "#818cf8"
+                    background: log.verificationMethod === "ocr_image" ? "#e0f2fe" : "#eff6ff",
+                    color: log.verificationMethod === "ocr_image" ? "#0284c7" : "#2563eb"
                   }}>
                     {log.verificationMethod === "ocr_image" ? <Scan size={18} /> : <Search size={18} />}
                   </div>
                   <div>
-                    <h4 style={{ fontSize: "0.95rem", fontWeight: "600", color: "#f8fafc", margin: 0 }}>
+                    <h4 style={{ fontSize: "0.95rem", fontWeight: "600", color: "#0f172a", margin: 0 }}>
                       Certificate ID: {log.certificateId}
                     </h4>
                     <span style={{ fontSize: "0.8rem", color: "#64748b" }}>
@@ -172,9 +173,9 @@ export default function Dashboard({ students = [] }) {
                     borderRadius: "20px",
                     fontSize: "0.75rem",
                     fontWeight: "700",
-                    background: log.result === "authentic" ? "rgba(16, 185, 129, 0.2)" : log.result === "tampered" ? "rgba(244, 63, 94, 0.2)" : "rgba(148, 163, 184, 0.2)",
-                    color: log.result === "authentic" ? "#34d399" : log.result === "tampered" ? "#fb7185" : "#94a3b8",
-                    border: log.result === "authentic" ? "1px solid rgba(16, 185, 129, 0.4)" : log.result === "tampered" ? "1px solid rgba(244, 63, 94, 0.4)" : "1px solid rgba(148, 163, 184, 0.4)"
+                    background: log.result === "authentic" ? "#d1fae5" : log.result === "tampered" ? "#ffe4e6" : "#f1f5f9",
+                    color: log.result === "authentic" ? "#059669" : log.result === "tampered" ? "#e11d48" : "#64748b",
+                    border: log.result === "authentic" ? "1px solid #a7f3d0" : log.result === "tampered" ? "1px solid #fecdd3" : "1px solid #e2e8f0"
                   }}>
                     {log.result.toUpperCase()}
                   </span>

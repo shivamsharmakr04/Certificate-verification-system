@@ -75,20 +75,20 @@ export default function AdminDashboard() {
         >
           <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
             <div style={{
-              background: "rgba(99, 102, 241, 0.2)",
-              color: "#818cf8",
+              background: "#eff6ff",
+              color: "#2563eb",
               padding: "12px",
               borderRadius: "14px",
-              border: "1px solid rgba(99, 102, 241, 0.3)"
+              border: "1px solid #bfdbfe"
             }}>
               <ShieldCheck size={28} />
             </div>
             <div>
-              <h1 style={{ fontSize: "1.6rem", fontWeight: "800", color: "#f8fafc", margin: 0 }}>
+              <h1 style={{ fontSize: "1.6rem", fontWeight: "800", color: "#0f172a", margin: 0 }}>
                 System Control Center
               </h1>
-              <p style={{ color: "#94a3b8", fontSize: "0.9rem", margin: "4px 0 0 0" }}>
-                Logged in as <strong style={{ color: "#38bdf8" }}>{user?.name || "Administrator"}</strong> ({user?.email})
+              <p style={{ color: "#64748b", fontSize: "0.9rem", margin: "4px 0 0 0" }}>
+                Logged in as <strong style={{ color: "#2563eb" }}>{user?.name || "Administrator"}</strong> ({user?.email})
               </p>
             </div>
           </div>
@@ -99,9 +99,9 @@ export default function AdminDashboard() {
               style={{
                 padding: "10px 18px",
                 borderRadius: "10px",
-                background: "rgba(255, 255, 255, 0.06)",
-                border: "1px solid rgba(255, 255, 255, 0.12)",
-                color: "#cbd5e1",
+                background: "#f8fafc",
+                border: "1px solid #cbd5e1",
+                color: "#334155",
                 fontWeight: "600",
                 fontSize: "0.85rem",
                 cursor: "pointer",
@@ -117,9 +117,9 @@ export default function AdminDashboard() {
               style={{
                 padding: "10px 18px",
                 borderRadius: "10px",
-                background: "rgba(244, 63, 94, 0.15)",
-                border: "1px solid rgba(244, 63, 94, 0.35)",
-                color: "#fb7185",
+                background: "#fff1f2",
+                border: "1px solid #fecdd3",
+                color: "#e11d48",
                 fontWeight: "600",
                 fontSize: "0.85rem",
                 cursor: "pointer",
@@ -140,16 +140,16 @@ export default function AdminDashboard() {
             style={{
               padding: "14px 24px",
               borderRadius: "12px",
-              border: activeTab === "dashboard" ? "1px solid #6366f1" : "1px solid rgba(255, 255, 255, 0.1)",
-              background: activeTab === "dashboard" ? "linear-gradient(135deg, #6366f1 0%, #4f46e5 100%)" : "rgba(15, 23, 42, 0.6)",
-              color: "#ffffff",
+              border: activeTab === "dashboard" ? "1px solid #2563eb" : "1px solid #e2e8f0",
+              background: activeTab === "dashboard" ? "linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%)" : "#ffffff",
+              color: activeTab === "dashboard" ? "#ffffff" : "#475569",
               fontWeight: "700",
               fontSize: "0.95rem",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
               gap: "8px",
-              boxShadow: activeTab === "dashboard" ? "0 4px 16px rgba(99, 102, 241, 0.4)" : "none",
+              boxShadow: activeTab === "dashboard" ? "0 4px 16px rgba(37, 99, 235, 0.35)" : "none",
               transition: "all 0.25s ease"
             }}
           >
@@ -162,16 +162,16 @@ export default function AdminDashboard() {
             style={{
               padding: "14px 24px",
               borderRadius: "12px",
-              border: activeTab === "upload" ? "1px solid #06b6d4" : "1px solid rgba(255, 255, 255, 0.1)",
-              background: activeTab === "upload" ? "linear-gradient(135deg, #06b6d4 0%, #0891b2 100%)" : "rgba(15, 23, 42, 0.6)",
-              color: "#ffffff",
+              border: activeTab === "upload" ? "1px solid #0284c7" : "1px solid #e2e8f0",
+              background: activeTab === "upload" ? "linear-gradient(135deg, #0284c7 0%, #0369a1 100%)" : "#ffffff",
+              color: activeTab === "upload" ? "#ffffff" : "#475569",
               fontWeight: "700",
               fontSize: "0.95rem",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
               gap: "8px",
-              boxShadow: activeTab === "upload" ? "0 4px 16px rgba(6, 182, 212, 0.4)" : "none",
+              boxShadow: activeTab === "upload" ? "0 4px 16px rgba(2, 132, 199, 0.35)" : "none",
               transition: "all 0.25s ease"
             }}
           >
@@ -184,16 +184,16 @@ export default function AdminDashboard() {
             style={{
               padding: "14px 24px",
               borderRadius: "12px",
-              border: activeTab === "students" ? "1px solid #10b981" : "1px solid rgba(255, 255, 255, 0.1)",
-              background: activeTab === "students" ? "linear-gradient(135deg, #10b981 0%, #059669 100%)" : "rgba(15, 23, 42, 0.6)",
-              color: "#ffffff",
+              border: activeTab === "students" ? "1px solid #10b981" : "1px solid #e2e8f0",
+              background: activeTab === "students" ? "linear-gradient(135deg, #10b981 0%, #059669 100%)" : "#ffffff",
+              color: activeTab === "students" ? "#ffffff" : "#475569",
               fontWeight: "700",
               fontSize: "0.95rem",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
               gap: "8px",
-              boxShadow: activeTab === "students" ? "0 4px 16px rgba(16, 185, 129, 0.4)" : "none",
+              boxShadow: activeTab === "students" ? "0 4px 16px rgba(16, 185, 129, 0.35)" : "none",
               transition: "all 0.25s ease"
             }}
           >

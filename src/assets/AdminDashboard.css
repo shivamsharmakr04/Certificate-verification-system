@@ -1,19 +1,18 @@
-/* --- Admin Dashboard Layout Container --- */
+/* --- Admin Dashboard Layout Container - Light Theme --- */
 .admin-page-container {
   min-height: calc(100vh - 80px);
-  padding-top: 90px;
+  padding-top: 100px;
   padding-bottom: 60px;
   background: var(--bg-gradient);
+  color: #0f172a;
 }
 
 /* Glass Header Panel */
 .admin-header-panel {
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
 }
 
 /* --- Table Section --- */
@@ -29,7 +28,7 @@
 .table-header h1 {
   font-size: 1.6rem;
   font-weight: 800;
-  color: #f8fafc;
+  color: #0f172a;
 }
 
 .search-wrapper {
@@ -41,17 +40,21 @@
   width: 100%;
   padding: 12px 14px 12px 40px;
   border-radius: 12px;
-  background: rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #f8fafc;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  color: #0f172a;
   font-size: 0.9rem;
   outline: none;
   transition: all 0.25s ease;
 }
 
+.search-wrapper input::placeholder {
+  color: #94a3b8;
+}
+
 .search-wrapper input:focus {
-  border-color: #6366f1;
-  box-shadow: 0 0 12px rgba(99, 102, 241, 0.3);
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 }
 
 .search-icon {
@@ -63,11 +66,10 @@
 }
 
 .table-container {
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(16px);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
   overflow-x: auto;
 }
 
@@ -80,25 +82,26 @@
 .data-table th {
   text-align: left;
   padding: 16px 20px;
-  color: #94a3b8;
+  color: #64748b;
   font-size: 0.8rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(30, 41, 59, 0.4);
+  border-bottom: 1px solid #e2e8f0;
+  background: #f8fafc;
 }
 
 .data-table td {
   padding: 16px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  color: #f8fafc;
+  border-bottom: 1px solid #f1f5f9;
+  color: #0f172a;
   font-size: 0.9rem;
 }
 
 .font-mono {
   font-family: var(--font-mono);
-  color: #38bdf8;
-  font-weight: 600;
+  color: #2563eb;
+  font-weight: 700;
 }
 
 .student-cell {
@@ -111,9 +114,9 @@
 .mini-avatar {
   width: 34px;
   height: 34px;
-  background: rgba(99, 102, 241, 0.2);
-  border: 1px solid rgba(99, 102, 241, 0.3);
-  color: #818cf8;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #2563eb;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -132,9 +135,9 @@
 }
 
 .badge.success {
-  background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.35);
+  background: #d1fae5;
+  color: #10b981;
+  border: 1px solid #a7f3d0;
 }
 
 .icon-btn {
@@ -147,15 +150,15 @@
 }
 
 .icon-btn.danger {
-  color: #fb7185;
-  background: rgba(244, 63, 94, 0.15);
-  border: 1px solid rgba(244, 63, 94, 0.3);
+  color: #ef4444;
+  background: #fef2f2;
+  border: 1px solid #fecdd3;
 }
 
 .icon-btn.danger:hover {
-  background: #f43f5e;
+  background: #ef4444;
   color: white;
-  box-shadow: 0 4px 12px rgba(244, 63, 94, 0.4);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
 .no-data {
@@ -169,8 +172,8 @@
 .spinner {
   width: 24px;
   height: 24px;
-  border: 3px solid rgba(255, 255, 255, 0.2);
-  border-top-color: #6366f1;
+  border: 3px solid #e2e8f0;
+  border-top-color: #2563eb;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
