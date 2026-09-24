@@ -131,12 +131,15 @@ router.post("/upload", auth, upload.single("file"), async (req, res) => {
       const nameMatch = text.match(/(?:Name|Student|Issued To):\s*([A-Za-z ]+)/i);
       const domainMatch = text.match(/(?:Domain|Field|Specialization):\s*([A-Za-z ]+)/i);
 
+      if (!idMatch || !nameMatch) {
+        if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+        return res.status(400).json({ msg: "Could not extract authentic Certificate ID or Student Name from the scanned image." });
+      }
+
       records.push({
-        certificateId: idMatch ? idMatch[1].replace(/ /g, "-").toUpperCase() : `CERT-IMG-${Math.floor(1000 + Math.random() * 9000)}`,
-        studentName: nameMatch ? nameMatch[1].trim() : "Scanned Student",
-        domain: domainMatch ? domainMatch[1].trim() : "Web Development",
-        startDate: new Date("2026-01-01"),
-        endDate: new Date("2026-04-01"),
+        certificateId: idMatch[1].replace(/ /g, "-").toUpperCase(),
+        studentName: nameMatch[1].trim(),
+        domain: domainMatch ? domainMatch[1].trim() : "General Internship",
         issueDate: new Date()
       });
     }
@@ -151,12 +154,15 @@ router.post("/upload", auth, upload.single("file"), async (req, res) => {
       const nameMatch = text.match(/(?:Name|Student):\s*([A-Za-z ]+)/i);
       const domainMatch = text.match(/(?:Domain|Field):\s*([A-Za-z ]+)/i);
 
+      if (!idMatch || !nameMatch) {
+        if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+        return res.status(400).json({ msg: "Could not extract authentic Certificate ID or Student Name from the PDF document." });
+      }
+
       records.push({
-        certificateId: idMatch ? idMatch[1].replace(/ /g, "-").toUpperCase() : `CERT-PDF-${Math.floor(1000 + Math.random() * 9000)}`,
-        studentName: nameMatch ? nameMatch[1].trim() : "PDF Student",
-        domain: domainMatch ? domainMatch[1].trim() : "Software Development",
-        startDate: new Date("2026-01-01"),
-        endDate: new Date("2026-04-01"),
+        certificateId: idMatch[1].replace(/ /g, "-").toUpperCase(),
+        studentName: nameMatch[1].trim(),
+        domain: domainMatch ? domainMatch[1].trim() : "General Internship",
         issueDate: new Date()
       });
     } 

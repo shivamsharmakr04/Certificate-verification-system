@@ -5,9 +5,9 @@ import { CheckCircle2, Calendar, Award, ShieldCheck, QrCode, Sparkles } from "lu
 export default function Certificatetemplate({ data }) {
   if (!data) return null;
 
-  const startDateFormatted = data.startDate ? new Date(data.startDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "Jan 15, 2023";
-  const endDateFormatted = data.endDate ? new Date(data.endDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "Apr 15, 2023";
-  const issueDateFormatted = data.issueDate ? new Date(data.issueDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "Recent";
+  const startDateFormatted = data.startDate ? new Date(data.startDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "N/A";
+  const endDateFormatted = data.endDate ? new Date(data.endDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "N/A";
+  const issueDateFormatted = data.issueDate ? new Date(data.issueDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "N/A";
 
   return (
     <motion.div 

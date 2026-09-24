@@ -35,11 +35,7 @@ export default function AdminDashboard() {
       setStudents(res.data || []);
     } catch (err) {
       console.warn("Could not fetch live certificates from backend:", err.message);
-      setStudents([
-        { certificateId: "CERT-001", studentName: "Alice Johnson", domain: "Web Development", status: "Verified", issueDate: new Date() },
-        { certificateId: "CERT-002", studentName: "Bob Smith", domain: "Data Science", status: "Verified", issueDate: new Date() },
-        { certificateId: "CERT-003", studentName: "Charlie Brown", domain: "Cyber Security", status: "Pending", issueDate: new Date() }
-      ]);
+      setStudents([]);
     } finally {
       setLoading(false);
     }

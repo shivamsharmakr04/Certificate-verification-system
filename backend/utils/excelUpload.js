@@ -33,16 +33,17 @@ module.exports = (filePath) => {
       return isNaN(d.getTime()) ? new Date() : d;
     };
 
+    if (!certId || !name) return null;
+
     return {
-      certificateId: certId || `CERT-${Math.floor(100000 + Math.random() * 900000)}`,
-      studentName: name || "Unknown Student",
-      domain: domain || "General Internship",
+      certificateId: certId.trim(),
+      studentName: name.trim(),
+      domain: domain ? domain.trim() : "N/A",
       startDate: parseDate(rawStart),
       endDate: parseDate(rawEnd),
       issueDate: parseDate(rawIssue)
     };
-  });
+  }).filter(Boolean);
 
-  // Filter out completely empty invalid rows
-  return normalizedRows.filter(r => r.certificateId && r.studentName);
+  return normalizedRows;
 };

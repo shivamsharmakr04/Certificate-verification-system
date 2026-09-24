@@ -19,17 +19,7 @@ export default function StudentDashboard() {
       setCertificate(res.data);
     } catch (err) {
       console.warn("Could not fetch personal certificate:", err.message);
-      // Fallback preview using user's auto-generated certificateId or default
-      if (user) {
-        setCertificate({
-          certificateId: user.certificateId || "CERT-2026-9901",
-          studentName: user.name || "Student User",
-          domain: "Full Stack Web Development",
-          startDate: "2026-01-15",
-          endDate: "2026-04-15",
-          issueDate: new Date()
-        });
-      }
+      setCertificate(null);
     } finally {
       setLoading(false);
     }
