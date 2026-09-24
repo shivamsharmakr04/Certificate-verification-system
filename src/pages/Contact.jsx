@@ -8,7 +8,8 @@ import {
   MessageSquare, 
   CheckCircle,
   Github,
-  Linkedin
+  Linkedin,
+  Sparkles
 } from "lucide-react";
 import "../assets/Contact.css";
 
@@ -54,6 +55,9 @@ export default function Contact() {
           animate="visible"
           variants={fadeIn}
         >
+          <div className="contact-badge">
+            <Sparkles size={16} /> WE ARE HERE TO HELP
+          </div>
           <h1>Get in Touch</h1>
           <p>Have questions about CertiVerify? We'd love to hear from you.</p>
         </motion.div>
